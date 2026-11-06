@@ -10,7 +10,7 @@ Portoconseg · levantamento de 06/11/2026
    - **Monitoo (brasileira):** ociosidade + USB + inventário, **sem captura de tela**. A mais barata. PT-BR.
    - **DeskTime:** ociosidade + **justificativa de ausência ("offline time")** + captura de tela com desfoque. Sem USB encontrado.
    - **Teramind:** cobre USB, captura de tela e muito mais — mas é a mais cara e tem modo oculto, que é exatamente o que gera risco jurídico.
-2. **Recomendação:** testar **Monitoo (7 dias grátis)** e **DeskTime (14 dias grátis)** em 2–3 máquinas, ao mesmo tempo, antes de gastar um real com desenvolvimento. Construir só faz sentido se, depois do teste, o que faltar for decisivo.
+2. **Recomendação (atualizada para 3 máquinas):** testar a **DeskTime Pro (14 dias grátis)** nas 3 máquinas. Custa cerca de US$ 231/ano e tem justificativa de ausência e print desfocado. A Monitoo deixa de compensar, porque cobra no mínimo 10 licenças. O controle de USB pode ser feito por política do Windows, sem software extra. Construir um sistema próprio para 3 máquinas não se paga.
 3. **O risco jurídico maior não é a ferramenta, é a configuração.** A ANPD analisou exatamente um caso de software que monitora funcionários com webcam e registro de digitação e concluiu que o legítimo interesse **não** se aplica, **mesmo com aviso prévio na política de privacidade** (ver seção 5).
 
 ## 2. Comparativo de ferramentas prontas
@@ -26,19 +26,27 @@ Portoconseg · levantamento de 06/11/2026
 
 "Não encontrado" = não achei em fonte oficial. **Não significa que não existe** — pergunte ao fornecedor.
 
-### Custo em 12 meses — 10 máquinas (plano anual, sem impostos, sem câmbio)
+### Custo em 12 meses — 3 máquinas (plano anual, sem impostos, sem câmbio)
+
+Quando o fornecedor exige mínimo de licenças, a conta usa o mínimo, porque é o que se paga.
 
 | Ferramenta / plano | Conta | Total 12 meses |
 |---|---|---|
-| Monitoo Advanced (com -20% anual) | 4,99 × 0,8 × 10 × 12 | **US$ 479** |
-| DeskTime Pro | 6,42 × 10 × 12 | **US$ 770** |
-| Insightful Workforce Analytics | 8 × 10 × 12 | **US$ 960** |
-| DeskTime Premium | 9,17 × 10 × 12 | **US$ 1.100** |
-| Hubstaff Team | 10 × 10 × 12 | **US$ 1.200** |
-| ActivTrak básico + captura de tela | (10 + 2) × 10 × 12 | **US$ 1.440** |
-| Teramind Starter | 14 × 10 × 12 | **US$ 1.680** |
+| Hubstaff Starter (recursos do plano não confirmados) | 4,99 × 3 × 12 | **US$ 180** |
+| DeskTime Pro | 6,42 × 3 × 12 | **US$ 231** |
+| Insightful Workforce Analytics | 8 × 3 × 12 | **US$ 288** |
+| DeskTime Premium | 9,17 × 3 × 12 | **US$ 330** |
+| Monitoo Advanced (mínimo 10, com -20% anual) | 4,99 × 0,8 × 10 × 12 | **US$ 479** |
+| ActivTrak básico + captura de tela (mínimo 5) | (10 + 2) × 5 × 12 | **US$ 720** |
+| Teramind Starter (mínimo 5) | 14 × 5 × 12 | **US$ 840** |
 
-Para 5 ou 20 máquinas, divida ou multiplique por 2 (exceto Monitoo, que cobra mínimo de 10). Não converti para reais de propósito: o câmbio muda e cartão internacional tem IOF — faça a conta no dia.
+Não converti para reais de propósito: o câmbio muda e cartão internacional tem IOF — faça a conta no dia.
+
+### Hostinger do André (conferido em 06/11/2026)
+
+- **KVM 1 (VPS)** `srv1340854.hstgr.cloud`: 1 vCPU, 4 GB RAM, 50 GB NVMe. Parado. **Expira 06/02/2027 sem renovação automática.** Renovação: R$ 815,88.
+- **Premium Web Hosting** (portoconseg.com.br): sites WordPress. Renova automaticamente em 28/09/2027.
+- Se um dia construir: usar o VPS, não o Premium. Com ferramenta pronta, nenhum dos dois é usado.
 
 ## 3. Construir o próprio sistema — custo real
 
