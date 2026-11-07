@@ -4,6 +4,8 @@ Portoconseg · plano para aprovação · 06/11/2026 · versão visual: https://c
 
 Sistema próprio para acompanhar o uso dos 3 computadores da corretora. Um programa leve roda em cada máquina, envia os dados para o VPS da Hostinger e o gestor vê tudo num painel web. Sem mensalidade.
 
+> **Atualizado em 07/11/2026:** sem pergunta de justificativa e sem tela para o funcionário. Ele vê apenas o ícone do programa ao lado do relógio. Os relatórios aparecem só para o gestor. Objetivo: saber se o computador está em uso no horário combinado, para conhecimento próprio.
+
 | Item | Valor |
 |---|---|
 | Máquinas | 3 — Windows 10 Home, Windows 11 Pro, Windows 11 Home |
@@ -26,13 +28,19 @@ flowchart LR
   DB --> N["n8n"] --> W["Relatório semanal e alertas"]
 ```
 
-Ociosidade: 5 min sem teclado/mouse → ocioso. Ao voltar depois de 10 min ou mais → janela pede justificativa (ligação com cliente, visita/reunião, pausa, outro). Valores configuráveis.
+Classificação, verificada a cada 5 segundos, sem nenhuma pergunta ou aviso ao funcionário:
+
+- **Ativo:** teclado ou mouse usados nos últimos 5 min → registra programa e domínio do site em uso.
+- **Inativo:** 5 min ou mais sem teclado e mouse → registra só o horário.
+- **Fora do computador:** tela bloqueada, PC suspenso ou desligado.
+
+O limite de 5 min é configurável no painel.
 
 Fila local no agente: sem internet, os dados ficam guardados e sobem quando a conexão volta.
 
 ## Entregas
 
-1. **Base:** início automático com ícone visível; logon/logoff/bloqueio/suspensão; tempo ativo e ocioso com justificativa; programa em uso e domínio do site; jornada do dia; painel com linha do tempo e ranking de programas/sites; tela "Meu dia" para o funcionário.
+1. **Base:** início automático com ícone visível; logon/logoff/bloqueio/suspensão; horários de atividade e inatividade, sem perguntas ao funcionário; programa em uso e domínio do site; jornada do dia; painel com linha do tempo e ranking de programas/sites; resumo do uso dentro do horário combinado (ativo, inativo, fora do computador).
 2. **Produtividade e segurança:** classificação produtivo/neutro/improdutivo; tempo por frente de trabalho; alertas (agente parado, USB, ociosidade longa no expediente); USB com registro e bloqueio opcional por máquina; inventário e saúde do Windows; relatório semanal no WhatsApp/e-mail via n8n.
 3. **Opcionais:** print de tela desfocado, desligado por padrão, retenção máxima de 7 dias; integração Ploomes e Digisac se as APIs permitirem.
 
@@ -43,9 +51,8 @@ Fila local no agente: sem internet, os dados ficam guardados e sobem quando a co
 | Tempo por frente de trabalho (cotação, atendimento, CRM, pós-venda, e-mail) | Recomendo |
 | Comparação com a própria média do funcionário (sem ranking entre colegas) | Recomendo |
 | Relatório semanal automático (n8n no VPS) | Recomendo |
+| Uso no horário combinado: primeira/última atividade, tempo ativo, inativo e fora do PC (não substitui ponto oficial) | Núcleo |
 | Blocos de foco e trocas de contexto por hora | Útil |
-| Meta diária combinada com o funcionário | Útil |
-| Jornada e pontualidade (não substitui ponto oficial) | Útil |
 | Saúde das máquinas (disco, atualizações, antivírus) | Útil |
 | Esforço x resultado com Ploomes | Depende de API — a confirmar |
 | Atendimentos e tempo de resposta com Digisac | Depende de API — a confirmar |
@@ -76,12 +83,13 @@ Fila local no agente: sem internet, os dados ficam guardados e sobem quando a co
 - Agente e API em C# / .NET 10 (suporte até 14/11/2028; .NET 8 termina em 10/11/2026).
 - PostgreSQL, Caddy com HTTPS automático, tudo em Docker Compose no VPS.
 - Painel com login; chave por máquina; log de acesso; retenção de 90 dias (atividade) e 7 dias (prints); backup diário.
+- Funcionário sem tela própria. Se pedir os próprios dados, o gestor exporta o relatório dele (direito de acesso, art. 18 da LGPD).
 - Agente instalado em `Program Files` (gravação só por administrador) com exceção no Defender.
 
 ## Decisões pendentes
 
 - Horário comercial
-- Tempos de ociosidade e de justificativa (sugestão 5 e 10 min)
+- Tempo para considerar inativo (sugestão 5 min; não gera aviso ao funcionário)
 - USB: registrar ou bloquear, por máquina
 - Sistemas e sites de cada frente de trabalho
 - Quem acessa o painel
