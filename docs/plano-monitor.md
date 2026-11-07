@@ -5,6 +5,8 @@ Portoconseg · plano para aprovação · 06/11/2026 · versão visual: https://c
 Sistema próprio para acompanhar o uso dos 3 computadores da corretora. Um programa leve roda em cada máquina, envia os dados para o VPS da Hostinger e o gestor vê tudo num painel web. Sem mensalidade.
 
 > **Atualizado em 07/11/2026:** sem pergunta de justificativa e sem tela para o funcionário. Ele vê apenas o ícone do programa ao lado do relógio. Os relatórios aparecem só para o gestor. Objetivo: saber se o computador está em uso no horário combinado, para conhecimento próprio.
+>
+> **Decisões de 07/11/2026:** horário seg–qui 8h–18h, sex 8h–17h, sábado e domingo descanso. Inativo após 5 min sem teclado e mouse. Pendrive só registrado, sem bloqueio. Sistemas: sites diversos + SegFlex (instalado). Painel disponível a qualquer hora para André e Renata, com logins separados. E-mail toda segunda com o fechamento da semana. Prints periódicos sem desfoque e, sob demanda, print ou vídeo curto da tela pelo painel.
 
 | Item | Valor |
 |---|---|
@@ -41,8 +43,13 @@ Fila local no agente: sem internet, os dados ficam guardados e sobem quando a co
 ## Entregas
 
 1. **Base:** início automático com ícone visível; logon/logoff/bloqueio/suspensão; horários de atividade e inatividade, sem perguntas ao funcionário; programa em uso e domínio do site; jornada do dia; painel com linha do tempo e ranking de programas/sites; resumo do uso dentro do horário combinado (ativo, inativo, fora do computador).
-2. **Produtividade e segurança:** classificação produtivo/neutro/improdutivo; tempo por frente de trabalho; alertas (agente parado, USB, ociosidade longa no expediente); USB com registro e bloqueio opcional por máquina; inventário e saúde do Windows; relatório semanal no WhatsApp/e-mail via n8n.
-3. **Opcionais:** print de tela desfocado, desligado por padrão, retenção máxima de 7 dias; integração Ploomes e Digisac se as APIs permitirem.
+   Inclui logins separados para André e Renata e programas instalados (ex.: SegFlex) no ranking.
+2. **Tela:** print periódico sem desfoque, só no horário combinado e com o PC ativo; botão no painel para print imediato; botão para gravar vídeo curto (30–60 s, sem áudio); prints e vídeos na linha do tempo; exclusão automática após o prazo definido.
+3. **Fechamento e controle:** e-mail toda segunda com o fechamento da semana anterior para André e Renata; pendrive só registrado (conexão e arquivos copiados); classificação de programas/sites e tempo por frente de trabalho; inventário e saúde do Windows; depois, se fizer sentido, integração Ploomes e Digisac.
+
+Captura sob demanda: o painel grava um pedido; o agente consulta pedidos a cada poucos segundos, captura e envia. O vídeo é enviado como sequência de quadros (ex.: 2 por segundo) e montado em MP4 no servidor.
+
+Estimativa de espaço (premissas, não medição): print de ~250 KB, 1 a cada 5 min, ~9 h ativas por dia, 3 máquinas, 5 dias → ~400 MB por semana; ~1,8 GB para 30 dias. Cabe com folga nos 50 GB do VPS.
 
 ## Recursos extras de produtividade
 
@@ -50,7 +57,7 @@ Fila local no agente: sem internet, os dados ficam guardados e sobem quando a co
 |---|---|
 | Tempo por frente de trabalho (cotação, atendimento, CRM, pós-venda, e-mail) | Recomendo |
 | Comparação com a própria média do funcionário (sem ranking entre colegas) | Recomendo |
-| Relatório semanal automático (n8n no VPS) | Recomendo |
+| Fechamento semanal por e-mail toda segunda (André e Renata) | Decidido |
 | Uso no horário combinado: primeira/última atividade, tempo ativo, inativo e fora do PC (não substitui ponto oficial) | Núcleo |
 | Blocos de foco e trocas de contexto por hora | Útil |
 | Saúde das máquinas (disco, atualizações, antivírus) | Útil |
@@ -82,18 +89,19 @@ Fila local no agente: sem internet, os dados ficam guardados e sobem quando a co
 
 - Agente e API em C# / .NET 10 (suporte até 14/11/2028; .NET 8 termina em 10/11/2026).
 - PostgreSQL, Caddy com HTTPS automático, tudo em Docker Compose no VPS.
-- Painel com login; chave por máquina; log de acesso; retenção de 90 dias (atividade) e 7 dias (prints); backup diário.
+- Painel com login individual (André, Renata); chave por máquina; log de acesso; retenção de 90 dias (atividade) e prazo definido para prints e vídeos (sugestão 30 dias); backup diário.
+- Prints e vídeos criptografados no VPS, visíveis só no painel. Sem áudio, sem webcam, sem registro de teclas.
+- E-mail enviado por uma caixa da própria Hostinger (ex.: monitor@portoconseg.com.br). A senha fica só no VPS, nunca no código.
 - Funcionário sem tela própria. Se pedir os próprios dados, o gestor exporta o relatório dele (direito de acesso, art. 18 da LGPD).
 - Agente instalado em `Program Files` (gravação só por administrador) com exceção no Defender.
 
 ## Decisões pendentes
 
-- Horário comercial
-- Tempo para considerar inativo (sugestão 5 min; não gera aviso ao funcionário)
-- USB: registrar ou bloquear, por máquina
-- Sistemas e sites de cada frente de trabalho
-- Quem acessa o painel
-- Relatório semanal: WhatsApp, e-mail ou ambos
+- Frequência dos prints periódicos (sugestão: 1 a cada 5 min, só ativo e no horário)
+- Prazo para apagar prints e vídeos (sugestão: 30 dias)
+- Ícone muda de cor durante gravação de vídeo (recomendado; sem janela nem pergunta)
+- Intervalo de almoço (sugestão: sem prints periódicos nesse período)
+- Lista de sites e sistemas por frente de trabalho (André vai enviar)
 
 ## Fontes
 
