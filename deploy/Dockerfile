@@ -3,15 +3,18 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
-COPY Monitor.slnx ./
+COPY Monitor.slnx VERSION Directory.Build.props ./
 COPY src/ src/
 RUN dotnet publish src/Monitor.Server/Monitor.Server.csproj -c Release -o /out/server
-RUN dotnet publish src/Monitor.Agent/Monitor.Agent.csproj -c Release -r win-x64 -o /out/agent
+RUN dotnet publish src/Monitor.Agent/Monitor.Agent.csproj -c Release -r win-x64 -o /out/agent \
+ && mkdir -p /out/agente \
+ && cp /out/agent/MonitorPortoconseg.exe "/out/agente/MonitorPortoconseg-$(tr -d '[:space:]' < VERSION).exe"
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 COPY --from=build /out/server/ ./
-COPY --from=build /out/agent/MonitorPortoconseg.exe ./agente/
+# O programa do Windows leva a versão no nome do arquivo (ex.: MonitorPortoconseg-1.0.0.exe).
+COPY --from=build /out/agente/ ./agente/
 COPY installer/ ./agente/
 
 ENV DATA_DIR=/data \

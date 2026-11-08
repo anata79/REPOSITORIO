@@ -20,7 +20,7 @@ internal sealed class TrayContext : ApplicationContext
 
         _status = new ToolStripMenuItem("Monitoramento ativo") { Enabled = false };
         var menu = new ContextMenuStrip();
-        menu.Items.Add(new ToolStripMenuItem("Monitor Portoconseg") { Enabled = false, Font = new Font(SystemFonts.MenuFont ?? SystemFonts.DefaultFont, FontStyle.Bold) });
+        menu.Items.Add(new ToolStripMenuItem($"Monitor Portoconseg {ServerClient.Version}") { Enabled = false, Font = new Font(SystemFonts.MenuFont ?? SystemFonts.DefaultFont, FontStyle.Bold) });
         menu.Items.Add(new ToolStripMenuItem("Registra horários de uso e os programas e sites em uso no expediente.") { Enabled = false });
         menu.Items.Add(new ToolStripMenuItem("Não registra o que é digitado, não tira fotos da tela e não lê conversas.") { Enabled = false });
         menu.Items.Add(new ToolStripSeparator());
@@ -30,7 +30,7 @@ internal sealed class TrayContext : ApplicationContext
         _icon = new NotifyIcon
         {
             Icon = BuildIcon(),
-            Text = "Monitor Portoconseg: monitoramento ativo",
+            Text = $"Monitor Portoconseg {ServerClient.Version}: monitoramento ativo",
             ContextMenuStrip = menu,
             Visible = true,
         };

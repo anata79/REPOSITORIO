@@ -4,6 +4,7 @@ Sistema próprio para acompanhar o uso dos computadores da corretora: horários 
 
 - **Guia de instalação:** [docs/instalacao.md](docs/instalacao.md)
 - **Plano do sistema e decisões:** [docs/plano-monitor.md](docs/plano-monitor.md)
+- **Histórico de versões:** [HISTORICO-DE-VERSOES.md](HISTORICO-DE-VERSOES.md) — versão atual no arquivo `VERSION`
 - **Comparativo comprar x construir:** [docs/comparativo-ferramentas.md](docs/comparativo-ferramentas.md)
 
 ![Painel, tela Dia (dados de exemplo)](docs/imagens/painel-dia.png)

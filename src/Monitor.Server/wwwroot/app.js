@@ -96,6 +96,7 @@ function showApp() {
   document.getElementById('login-view').hidden = true;
   document.getElementById('app-view').hidden = false;
   document.getElementById('user-name').textContent = state.me ? state.me.displayName : '';
+  document.getElementById('app-version').textContent = state.me && state.me.version ? `versão ${state.me.version}` : '';
   route();
 }
 
@@ -431,7 +432,7 @@ async function renderMachines() {
     <section class="card"><h2>Como instalar num computador</h2>
       <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px">
         <li>Cadastre o computador abaixo e copie a chave.</li>
-        <li>No computador do funcionário, entre neste painel e baixe o instalador: <a href="/api/download/agente">MonitorPortoconseg-instalador.zip</a>.</li>
+        <li>No computador do funcionário, entre neste painel e baixe o instalador: <a href="/api/download/agente">MonitorPortoconseg-${esc(state.me && state.me.version)}-instalador.zip</a>.</li>
         <li>Extraia o .zip, clique com o botão direito em <b>instalar.bat</b> e escolha <b>Executar como administrador</b>.</li>
         <li>Informe o endereço do painel e a chave. Em cerca de 1 minuto o computador aparece como conectado.</li>
       </ol>
@@ -465,7 +466,7 @@ async function renderMachines() {
         </td>
       </tr>`).join('')}</tbody></table></div>`;
   }
-  html += `<p class="note">Computador "conectado" enviou dados nos últimos 3 minutos. Desativar faz o computador parar de aparecer nos relatórios e recusa os envios dele.</p></section>`;
+  html += `<p class="note">A coluna Versão mostra a versão do programa em cada computador; a do servidor aparece no topo do painel. Computador "conectado" enviou dados nos últimos 3 minutos. Desativar faz o computador parar de aparecer nos relatórios e recusa os envios dele.</p></section>`;
   main().innerHTML = html;
 
   const showToken = (name, token) => {

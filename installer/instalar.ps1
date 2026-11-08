@@ -15,10 +15,14 @@ function Fail($text) { Write-Host "`nERRO: $text" -ForegroundColor Red; exit 1 }
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 if (-not $isAdmin) { Fail 'Execute como administrador (botão direito em instalar.bat > Executar como administrador).' }
 
-$source = Join-Path $PSScriptRoot $ExeName
-if (-not (Test-Path $source)) { Fail "Arquivo $ExeName não encontrado ao lado deste instalador. Extraia o .zip inteiro antes de instalar." }
+# O executável vem com a versão no nome (ex.: MonitorPortoconseg-1.0.0.exe). No computador ele é
+# instalado sempre como MonitorPortoconseg.exe, para as atualizações substituírem o anterior.
+$sourceFile = Get-ChildItem -Path $PSScriptRoot -Filter 'MonitorPortoconseg*.exe' | Sort-Object Name -Descending | Select-Object -First 1
+if (-not $sourceFile) { Fail "Arquivo MonitorPortoconseg-<versão>.exe não encontrado ao lado deste instalador. Extraia o .zip inteiro antes de instalar." }
+$source = $sourceFile.FullName
+$version = $sourceFile.VersionInfo.ProductVersion
 
-Write-Host 'Monitor Portoconseg - instalação' -ForegroundColor White
+Write-Host "Monitor Portoconseg $version - instalação" -ForegroundColor White
 if (-not $Servidor) { $Servidor = Read-Host 'Endereço do painel (ex.: https://monitor.portoconseg.com.br)' }
 if (-not $Chave) { $Chave = Read-Host 'Chave deste computador (copiada do painel, em Computadores)' }
 $Servidor = $Servidor.Trim().TrimEnd('/')
@@ -81,4 +85,5 @@ if (Get-Process -Name 'MonitorPortoconseg' -ErrorAction SilentlyContinue) {
     Write-Host 'O programa vai iniciar no próximo login. Para começar já, saia da conta do Windows e entre de novo.' -ForegroundColor Yellow
 }
 
-Write-Host "`nInstalação concluída. Em cerca de 1 minuto o computador aparece como 'Conectado' no painel." -ForegroundColor White
+Write-Host "`nVersão instalada: $version" -ForegroundColor White
+Write-Host "Instalação concluída. Em cerca de 1 minuto o computador aparece como 'Conectado' no painel." -ForegroundColor White

@@ -63,7 +63,7 @@ Se o navegador reclamar do certificado logo no começo, espere 1 ou 2 minutos: o
 
 Faça em cada um dos 3 computadores, com um usuário administrador do Windows:
 
-1. No computador, abra o painel, entre com seu login, vá em **Computadores** e clique em **MonitorPortoconseg-instalador.zip** para baixar.
+1. No computador, abra o painel, entre com seu login, vá em **Computadores** e clique em **MonitorPortoconseg-1.0.0-instalador.zip** para baixar (o número muda a cada versão; veja [HISTORICO-DE-VERSOES.md](../HISTORICO-DE-VERSOES.md)).
 2. Clique com o botão direito no .zip → **Extrair tudo**.
 3. Na pasta extraída, clique com o botão direito em **instalar.bat** → **Executar como administrador**.
 4. Se aparecer **"O Windows protegeu o computador"**, clique em **Mais informações → Executar assim mesmo**. Esse aviso aparece porque o programa não tem certificado de assinatura pago.
@@ -71,7 +71,7 @@ Faça em cada um dos 3 computadores, com um usuário administrador do Windows:
    - **Endereço do painel:** `https://monitor.portoconseg.com.br`
    - **Chave:** a chave daquele computador
 6. O instalador confere a chave, copia o programa, adiciona a exceção no Windows Defender e configura para iniciar com o Windows.
-7. Confira o **ícone azul com um visto** ao lado do relógio (pode estar escondido na setinha ^).
+7. Confira o **ícone azul com um visto** ao lado do relógio (pode estar escondido na setinha ^). Passando o mouse, aparece a versão instalada.
 8. No painel, em **Computadores**, a máquina aparece como **Conectado** em cerca de 1 minuto. Os primeiros dados aparecem em **Dia** em cerca de 6 minutos.
 
 ### O que o programa faz e não faz

@@ -82,7 +82,7 @@ app.Use(async (ctx, next) =>
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/health", () => Results.Ok(new { ok = true }));
+app.MapGet("/health", () => Results.Ok(new { ok = true, version = AppVersion.Current }));
 app.MapAgentEndpoints();
 app.MapPanelEndpoints();
 

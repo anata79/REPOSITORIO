@@ -1,0 +1,7 @@
+<Project>
+  <!-- Versão única do sistema, lida do arquivo VERSION na raiz. Mude só lá. -->
+  <PropertyGroup>
+    <Version>$([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory)VERSION').Trim())</Version>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+</Project>

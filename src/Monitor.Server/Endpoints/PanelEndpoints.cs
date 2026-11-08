@@ -56,7 +56,7 @@ public static class PanelEndpoints
             await ctx.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity),
                 new AuthenticationProperties { IsPersistent = true });
             Audit(conn, ctx, "login", null, user.Username);
-            return Results.Ok(new { username = user.Username, displayName = user.Display });
+            return Results.Ok(new { username = user.Username, displayName = user.Display, version = AppVersion.Current });
         }).AddEndpointFilter(RequireCsrfHeader);
 
         var panel = api.MapGroup("").RequireAuthorization().AddEndpointFilter(RequireCsrfHeader);
@@ -72,6 +72,7 @@ public static class PanelEndpoints
         {
             username = user.Identity?.Name,
             displayName = user.FindFirst("display")?.Value ?? user.Identity?.Name,
+            version = AppVersion.Current,
         }));
 
         panel.MapPost("/me/password", (PasswordRequest body, ClaimsPrincipal user, HttpContext ctx, Db db) =>
@@ -149,13 +150,14 @@ public static class PanelEndpoints
         {
             var dir = Environment.GetEnvironmentVariable("AGENT_DIR") ?? Path.Combine(AppContext.BaseDirectory, "agente");
             var files = Directory.Exists(dir) ? Directory.GetFiles(dir) : [];
-            if (!files.Any(f => Path.GetFileName(f).Equals("MonitorPortoconseg.exe", StringComparison.OrdinalIgnoreCase)))
+            if (!files.Any(f => Path.GetFileName(f).StartsWith("MonitorPortoconseg", StringComparison.OrdinalIgnoreCase)
+                    && f.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)))
                 return Results.NotFound(new { error = "Instalador não encontrado no servidor." });
 
-            using (var conn = db.Open()) Audit(conn, ctx, "baixou_instalador", null);
+            using (var conn = db.Open()) Audit(conn, ctx, "baixou_instalador", $"versão {AppVersion.Current}");
 
             ctx.Response.ContentType = "application/zip";
-            ctx.Response.Headers.ContentDisposition = "attachment; filename=\"MonitorPortoconseg-instalador.zip\"";
+            ctx.Response.Headers.ContentDisposition = $"attachment; filename=\"MonitorPortoconseg-{AppVersion.Current}-instalador.zip\"";
             await using var body = ctx.Response.BodyWriter.AsStream();
             using (var zip = new System.IO.Compression.ZipArchive(body, System.IO.Compression.ZipArchiveMode.Create, leaveOpen: true))
             {
