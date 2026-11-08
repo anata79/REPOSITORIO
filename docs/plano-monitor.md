@@ -87,7 +87,7 @@ Exemplo ilustrativo de relatório do dia (dados inventados):
 
 ## Implantação
 
-1. André: termo revisado por advogado e assinado pelos 3 funcionários.
+1. André: avisa os 3 funcionários (recomendado: por mensagem escrita, para ficar registrado).
 2. André: ativar renovação automática do VPS (expira 06/02/2027).
 3. André: criar `monitor.portoconseg.com.br` apontando para o VPS.
 4. Claude: servidor, painel, agente Windows e instalador.
@@ -112,13 +112,28 @@ Exemplo ilustrativo de relatório do dia (dados inventados):
 |---|---|
 | Programas instalados | SegFlexNET, Aggilizador (Agger), pacote Office (Outlook, Word, Excel, PowerPoint, Teams) |
 | Sites | Ploomes, Clicksign, Digisac, Corretor Online, Área Exclusiva, portais de seguradoras, Google Agenda, Google Keep, Hostinger, Gemini |
-| Uso pessoal (inicial) | Bancos, redes sociais, streaming de vídeo e música, compras, jogos — ajustável no painel |
+| Uso pessoal (inicial) | Bancos, redes sociais, streaming de vídeo e música, compras, jogos, Airbnb, Stay Life — ajustável no painel |
 
 Sites novos aparecem como "não classificado"; André ou Renata marcam como trabalho ou pessoal no painel.
 
+## Entrega 3 (opcional): celular Android da empresa
+
+- App instalado por André (APK fora da Play Store), ícone visível.
+- Usa a API oficial de estatísticas de uso do Android (`UsageStatsManager`), com a permissão "Acesso ao uso" liberada manualmente nas configurações do celular.
+- Registra tela ligada/desligada e tempo em primeiro plano de cada aplicativo, no horário combinado; envia ao mesmo servidor e aparece no mesmo painel.
+- Não registra sites, conteúdo de conversas nem ligações. Não usa serviço de acessibilidade (restrito pelo Google e invasivo).
+- Limites: WhatsApp aparece só como "WhatsApp", sem saber se a conversa é de trabalho; o funcionário pode desligar a permissão (gera alerta no painel); economia de bateria de alguns fabricantes pode atrasar o envio.
+- iPhone: não é viável. A Apple não deixa os dados de uso saírem do aparelho.
+
+## Decisões de 08/11/2026 (3)
+
+- Encaminhamento de e-mail do Outlook: configurado por André, intencional.
+- Airbnb e Stay Life: uso pessoal.
+- Sem termo de ciência assinado: André avisa os funcionários. Recomendação registrada: aviso por mensagem escrita, para ter prova de que avisou.
+
 ## Decisões pendentes
 
-- Airbnb e Stay Life (vistos nas abas do navegador): trabalho ou uso pessoal?
+- Celular Android: incluir como entrega 3?
 - Lista de sites e sistemas por frente de trabalho (André vai enviar)
 
 ## Fontes
