@@ -47,6 +47,12 @@ Fila local no agente: sem internet, os dados ficam guardados e sobem quando a co
 2. **Tela:** print periódico sem desfoque, só no horário combinado e com o PC ativo; botão no painel para print imediato; botão para gravar vídeo curto (30–60 s, sem áudio); prints e vídeos na linha do tempo; exclusão automática após o prazo definido.
 3. **Fechamento e controle:** e-mail toda segunda com o fechamento da semana anterior para André e Renata; pendrive só registrado (conexão e arquivos copiados); classificação de programas/sites e tempo por frente de trabalho; inventário e saúde do Windows; depois, se fizer sentido, integração Ploomes e Digisac.
 
+Filtro de uso pessoal (decidido em 08/11/2026): antes de cada print e de cada quadro de vídeo, o agente confere o processo e o domínio em primeiro plano. Se estiverem na lista de uso pessoal (bancos, redes sociais, streaming, compras — editável no painel), a imagem não é feita e nada sai do computador; registra-se só "uso pessoal" com horário. Limite conhecido: o filtro olha o site, não o conteúdo — por exemplo, um Gmail pessoal e um Gmail de trabalho têm o mesmo endereço.
+
+Não se usa IA para analisar as imagens: teria custo por imagem (recorrente) e enviaria prints com dados de clientes a um serviço externo.
+
+Almoço: sem horário fixo. Print só com PC ativo, então o almoço cai no tempo inativo, sem prints. Ícone muda de cor durante gravação de vídeo. Arquivos acessíveis pela internet só com login de André ou Renata; nenhum link aberto.
+
 Captura sob demanda: o painel grava um pedido; o agente consulta pedidos a cada poucos segundos, captura e envia. O vídeo é enviado como sequência de quadros (ex.: 2 por segundo) e montado em MP4 no servidor.
 
 Estimativa de espaço (premissas, não medição): print de ~250 KB, 1 a cada 5 min, ~9 h ativas por dia, 3 máquinas, 5 dias → ~400 MB por semana; ~1,8 GB para 30 dias. Cabe com folga nos 50 GB do VPS.
@@ -99,8 +105,8 @@ Estimativa de espaço (premissas, não medição): print de ~250 KB, 1 a cada 5 
 
 - Frequência dos prints periódicos (sugestão: 1 a cada 5 min, só ativo e no horário)
 - Prazo para apagar prints e vídeos (sugestão: 30 dias)
-- Ícone muda de cor durante gravação de vídeo (recomendado; sem janela nem pergunta)
-- Intervalo de almoço (sugestão: sem prints periódicos nesse período)
+- Login em duas etapas no painel (recomendado: senha + código no celular)
+- Lista inicial de uso pessoal (Claude propõe, André ajusta)
 - Lista de sites e sistemas por frente de trabalho (André vai enviar)
 
 ## Fontes
