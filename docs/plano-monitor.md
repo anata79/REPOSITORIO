@@ -29,7 +29,7 @@ Sistema próprio para acompanhar o uso dos 3 computadores da corretora. Um progr
 ```mermaid
 flowchart LR
   A1["Agente PC 1"] & A2["Agente PC 2"] & A3["Agente PC 3"] -- "HTTPS, a cada 1 min" --> API["API no VPS"]
-  API --> DB[("PostgreSQL")]
+  API --> DB[("SQLite")]
   DB --> P["Painel web"] --> G["Gestor"]
   DB --> N["Fechamento semanal"] --> W["Página de fechamento no painel"]
 ```
@@ -99,7 +99,8 @@ Exemplo ilustrativo de relatório do dia (dados inventados):
 ## Tecnologia e segurança
 
 - Agente e API em C# / .NET 10 (suporte até 14/11/2028; .NET 8 termina em 10/11/2026).
-- PostgreSQL, Caddy com HTTPS automático, tudo em Docker Compose no VPS.
+- SQLite (um arquivo no VPS; suficiente para 3 computadores e mais simples de copiar que PostgreSQL), Caddy com HTTPS automático, tudo em Docker Compose no VPS.
+- Instalador do Windows montado no próprio servidor e baixado pelo painel, com login.
 - Painel com login individual (André, Renata); chave por máquina; log de acesso; retenção de 90 dias (atividade); backup diário.
 - Nenhuma imagem da tela. Sem áudio, sem webcam, sem registro de teclas. Só programa, domínio e horários.
 - Login só com usuário e senha (decisão de André: sem imagens, não precisa de segunda etapa).
@@ -124,6 +125,18 @@ Sites novos aparecem como "não classificado"; André ou Renata marcam como trab
 - Não registra sites, conteúdo de conversas nem ligações. Não usa serviço de acessibilidade (restrito pelo Google e invasivo).
 - Limites: WhatsApp aparece só como "WhatsApp", sem saber se a conversa é de trabalho; o funcionário pode desligar a permissão (gera alerta no painel); economia de bateria de alguns fabricantes pode atrasar o envio.
 - iPhone: não é viável. A Apple não deixa os dados de uso saírem do aparelho.
+
+## Status da entrega 1 (08/11/2026)
+
+Construída e testada neste ambiente (Linux):
+- Servidor, painel e regras: 40 testes automáticos e um teste de ponta a ponta com dados simulados (login, envio, relatórios do dia e da semana, classificação, limpeza de uso pessoal, horários com data de início, download do instalador).
+- Programa do Windows: compila e gera o `MonitorPortoconseg.exe` (cerca de 75 MB, não precisa instalar .NET).
+
+Não testado ainda, depende do piloto:
+- O programa rodando num Windows de verdade (leitura da barra de endereço dos navegadores, título da janela do SegFlexNET, início automático, antivírus).
+- A montagem da imagem Docker no VPS (aqui não há Docker em execução).
+
+Horário combinado editável no painel, com data de início: cada mudança vale a partir da data escolhida, sem alterar relatórios anteriores.
 
 ## Decisões de 08/11/2026 (3)
 

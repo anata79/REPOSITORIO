@@ -1,0 +1,9 @@
+**/bin/
+**/obj/
+**/out/
+dist/
+docs/
+tests/
+.git/
+deploy/.env
+*.db

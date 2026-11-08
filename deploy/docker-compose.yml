@@ -1,0 +1,33 @@
+# Monitor Portoconseg no VPS: servidor + Caddy (HTTPS automático com Let's Encrypt).
+# Uso (na pasta deploy): docker compose up -d --build
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: monitor-portoconseg
+    restart: unless-stopped
+    volumes:
+      - dados:/data
+    expose:
+      - "8080"
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:?Defina DOMAIN no arquivo .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  dados:
+  caddy_data:
+  caddy_config:
