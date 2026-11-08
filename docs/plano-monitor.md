@@ -6,7 +6,9 @@ Sistema próprio para acompanhar o uso dos 3 computadores da corretora. Um progr
 
 > **Atualizado em 07/11/2026:** sem pergunta de justificativa e sem tela para o funcionário. Ele vê apenas o ícone do programa ao lado do relógio. Os relatórios aparecem só para o gestor. Objetivo: saber se o computador está em uso no horário combinado, para conhecimento próprio.
 >
-> **Decisões de 07/11/2026:** horário seg–qui 8h–18h, sex 8h–17h, sábado e domingo descanso. Inativo após 5 min sem teclado e mouse. Pendrive só registrado, sem bloqueio. Sistemas: sites diversos + SegFlex (instalado). Painel disponível a qualquer hora para André e Renata, com logins separados. E-mail toda segunda com o fechamento da semana. Prints periódicos sem desfoque e, sob demanda, print ou vídeo curto da tela pelo painel.
+> **Decisões de 07/11/2026:** horário seg–qui 8h–18h, sex 8h–17h, sábado e domingo descanso. Inativo após 5 min sem teclado e mouse. Pendrive só registrado, sem bloqueio. Sistemas: sites diversos + SegFlex (instalado). Painel disponível a qualquer hora para André e Renata, com logins separados. E-mail toda segunda com o fechamento da semana.
+>
+> **Decisão de 08/11/2026:** sem prints e sem vídeos. O sistema registra só programa, domínio do site e horários, e monta o relatório do dia. Uso pessoal aparece só como tempo total, sem o nome do site.
 
 | Item | Valor |
 |---|---|
@@ -27,7 +29,7 @@ flowchart LR
   A1["Agente PC 1"] & A2["Agente PC 2"] & A3["Agente PC 3"] -- "HTTPS, a cada 1 min" --> API["API no VPS"]
   API --> DB[("PostgreSQL")]
   DB --> P["Painel web"] --> G["Gestor"]
-  DB --> N["n8n"] --> W["Relatório semanal e alertas"]
+  DB --> N["Fechamento semanal"] --> W["E-mail toda segunda"]
 ```
 
 Classificação, verificada a cada 5 segundos, sem nenhuma pergunta ou aviso ao funcionário:
@@ -44,18 +46,19 @@ Fila local no agente: sem internet, os dados ficam guardados e sobem quando a co
 
 1. **Base:** início automático com ícone visível; logon/logoff/bloqueio/suspensão; horários de atividade e inatividade, sem perguntas ao funcionário; programa em uso e domínio do site; jornada do dia; painel com linha do tempo e ranking de programas/sites; resumo do uso dentro do horário combinado (ativo, inativo, fora do computador).
    Inclui logins separados para André e Renata e programas instalados (ex.: SegFlex) no ranking.
-2. **Tela:** print periódico sem desfoque, só no horário combinado e com o PC ativo; botão no painel para print imediato; botão para gravar vídeo curto (30–60 s, sem áudio); prints e vídeos na linha do tempo; exclusão automática após o prazo definido.
-3. **Fechamento e controle:** e-mail toda segunda com o fechamento da semana anterior para André e Renata; pendrive só registrado (conexão e arquivos copiados); classificação de programas/sites e tempo por frente de trabalho; inventário e saúde do Windows; depois, se fizer sentido, integração Ploomes e Digisac.
+2. **Relatórios e controle:** relatório do dia no painel a qualquer hora; e-mail toda segunda com o fechamento da semana anterior para André e Renata; uso pessoal só como tempo total, sem o nome do site; pendrive só registrado (conexão e arquivos copiados); classificação de programas/sites e tempo por frente de trabalho; inventário e saúde do Windows; depois, se fizer sentido, integração Ploomes e Digisac.
 
-Filtro de uso pessoal (decidido em 08/11/2026): antes de cada print e de cada quadro de vídeo, o agente confere o processo e o domínio em primeiro plano. Se estiverem na lista de uso pessoal (bancos, redes sociais, streaming, compras — editável no painel), a imagem não é feita e nada sai do computador; registra-se só "uso pessoal" com horário. Limite conhecido: o filtro olha o site, não o conteúdo — por exemplo, um Gmail pessoal e um Gmail de trabalho têm o mesmo endereço.
+Registro: o agente verifica a cada 5 segundos o programa e o site em primeiro plano e grava períodos com início e fim (ex.: "Ploomes, 09:12–09:47"). Não é amostragem a cada X minutos: o tempo de cada atividade fica exato. O limite de 5 min vale só para considerar o PC inativo.
 
-Não se usa IA para analisar as imagens: teria custo por imagem (recorrente) e enviaria prints com dados de clientes a um serviço externo.
+Uso pessoal: lista editável no painel (bancos, redes sociais, streaming, compras). Tempo nesses sites entra como "Uso pessoal", sem o domínio. Limite conhecido: a lista olha o site, não o conteúdo — um Gmail pessoal e um de trabalho têm o mesmo endereço.
 
-Almoço: sem horário fixo. Print só com PC ativo, então o almoço cai no tempo inativo, sem prints. Ícone muda de cor durante gravação de vídeo. Arquivos acessíveis pela internet só com login de André ou Renata; nenhum link aberto.
+Almoço: sem horário fixo. Aparece naturalmente como tempo inativo ou fora do computador.
 
-Captura sob demanda: o painel grava um pedido; o agente consulta pedidos a cada poucos segundos, captura e envia. O vídeo é enviado como sequência de quadros (ex.: 2 por segundo) e montado em MP4 no servidor.
+Exemplo ilustrativo de relatório do dia (dados inventados):
 
-Estimativa de espaço (premissas, não medição): print de ~250 KB, 1 a cada 5 min, ~9 h ativas por dia, 3 máquinas, 5 dias → ~400 MB por semana; ~1,8 GB para 30 dias. Cabe com folga nos 50 GB do VPS.
+| Computador | Chegada | Saída | Ativo | Inativo | Fora do PC | Mais usados |
+|---|---|---|---|---|---|---|
+| Computador 1 | 08:32 | 18:05 | 6h55 | 1h10 | 1h28 | Portais de seguradora 2h40 · Ploomes 1h50 · Digisac 1h15 · SegFlex 50min · Uso pessoal 20min |
 
 ## Recursos extras de produtividade
 
@@ -95,18 +98,18 @@ Estimativa de espaço (premissas, não medição): print de ~250 KB, 1 a cada 5 
 
 - Agente e API em C# / .NET 10 (suporte até 14/11/2028; .NET 8 termina em 10/11/2026).
 - PostgreSQL, Caddy com HTTPS automático, tudo em Docker Compose no VPS.
-- Painel com login individual (André, Renata); chave por máquina; log de acesso; retenção de 90 dias (atividade) e prazo definido para prints e vídeos (sugestão 30 dias); backup diário.
-- Prints e vídeos criptografados no VPS, visíveis só no painel. Sem áudio, sem webcam, sem registro de teclas.
+- Painel com login individual (André, Renata); chave por máquina; log de acesso; retenção de 90 dias (atividade); backup diário.
+- Nenhuma imagem da tela. Sem áudio, sem webcam, sem registro de teclas. Só programa, domínio e horários.
 - E-mail enviado por uma caixa da própria Hostinger (ex.: monitor@portoconseg.com.br). A senha fica só no VPS, nunca no código.
 - Funcionário sem tela própria. Se pedir os próprios dados, o gestor exporta o relatório dele (direito de acesso, art. 18 da LGPD).
 - Agente instalado em `Program Files` (gravação só por administrador) com exceção no Defender.
 
 ## Decisões pendentes
 
-- Frequência dos prints periódicos (sugestão: 1 a cada 5 min, só ativo e no horário)
-- Prazo para apagar prints e vídeos (sugestão: 30 dias)
-- Login em duas etapas no painel (recomendado: senha + código no celular)
+- Título da janela nos sistemas de trabalho escolhidos (opcional; mostra a tela do sistema, ex. "Cotação Automóvel", mas pode trazer nome de cliente)
+- Login em duas etapas no painel (recomendado; risco menor sem prints)
 - Lista inicial de uso pessoal (Claude propõe, André ajusta)
+- Caixa de e-mail para enviar os relatórios (ex.: monitor@portoconseg.com.br)
 - Lista de sites e sistemas por frente de trabalho (André vai enviar)
 
 ## Fontes
