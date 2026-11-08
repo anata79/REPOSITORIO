@@ -6,7 +6,9 @@ Sistema próprio para acompanhar o uso dos 3 computadores da corretora. Um progr
 
 > **Atualizado em 07/11/2026:** sem pergunta de justificativa e sem tela para o funcionário. Ele vê apenas o ícone do programa ao lado do relógio. Os relatórios aparecem só para o gestor. Objetivo: saber se o computador está em uso no horário combinado, para conhecimento próprio.
 >
-> **Decisões de 07/11/2026:** horário seg–qui 8h–18h, sex 8h–17h, sábado e domingo descanso. Inativo após 5 min sem teclado e mouse. Pendrive só registrado, sem bloqueio. Sistemas: sites diversos + SegFlex (instalado). Painel disponível a qualquer hora para André e Renata, com logins separados. E-mail toda segunda com o fechamento da semana.
+> **Decisões de 07/11/2026:** horário seg–qui 8h–18h, sex 8h–17h, sábado e domingo descanso. Inativo após 5 min sem teclado e mouse. Pendrive só registrado, sem bloqueio. Sistemas: sites diversos + SegFlex (instalado). Painel disponível a qualquer hora para André e Renata, com logins separados.
+>
+> **Decisões de 08/11/2026 (2):** registrar a janela ativa (programa, site e título da janela) nos sistemas de trabalho; no uso pessoal, só o tempo total. Login só com usuário e senha. Sem e-mail por enquanto: fechamento da semana numa página do painel, pronta toda segunda.
 >
 > **Decisão de 08/11/2026:** sem prints e sem vídeos. O sistema registra só programa, domínio do site e horários, e monta o relatório do dia. Uso pessoal aparece só como tempo total, sem o nome do site.
 
@@ -29,7 +31,7 @@ flowchart LR
   A1["Agente PC 1"] & A2["Agente PC 2"] & A3["Agente PC 3"] -- "HTTPS, a cada 1 min" --> API["API no VPS"]
   API --> DB[("PostgreSQL")]
   DB --> P["Painel web"] --> G["Gestor"]
-  DB --> N["Fechamento semanal"] --> W["E-mail toda segunda"]
+  DB --> N["Fechamento semanal"] --> W["Página de fechamento no painel"]
 ```
 
 Classificação, verificada a cada 5 segundos, sem nenhuma pergunta ou aviso ao funcionário:
@@ -46,7 +48,7 @@ Fila local no agente: sem internet, os dados ficam guardados e sobem quando a co
 
 1. **Base:** início automático com ícone visível; logon/logoff/bloqueio/suspensão; horários de atividade e inatividade, sem perguntas ao funcionário; programa em uso e domínio do site; jornada do dia; painel com linha do tempo e ranking de programas/sites; resumo do uso dentro do horário combinado (ativo, inativo, fora do computador).
    Inclui logins separados para André e Renata e programas instalados (ex.: SegFlex) no ranking.
-2. **Relatórios e controle:** relatório do dia no painel a qualquer hora; e-mail toda segunda com o fechamento da semana anterior para André e Renata; uso pessoal só como tempo total, sem o nome do site; pendrive só registrado (conexão e arquivos copiados); classificação de programas/sites e tempo por frente de trabalho; inventário e saúde do Windows; depois, se fizer sentido, integração Ploomes e Digisac.
+2. **Relatórios e controle:** relatório do dia no painel a qualquer hora; página de fechamento da semana anterior pronta no painel toda segunda (sem e-mail por enquanto); uso pessoal só como tempo total, sem o nome do site; pendrive só registrado (conexão e arquivos copiados); classificação de programas/sites e tempo por frente de trabalho; inventário e saúde do Windows; depois, se fizer sentido, integração Ploomes e Digisac.
 
 Registro: o agente verifica a cada 5 segundos o programa e o site em primeiro plano e grava períodos com início e fim (ex.: "Ploomes, 09:12–09:47"). Não é amostragem a cada X minutos: o tempo de cada atividade fica exato. O limite de 5 min vale só para considerar o PC inativo.
 
@@ -66,7 +68,7 @@ Exemplo ilustrativo de relatório do dia (dados inventados):
 |---|---|
 | Tempo por frente de trabalho (cotação, atendimento, CRM, pós-venda, e-mail) | Recomendo |
 | Comparação com a própria média do funcionário (sem ranking entre colegas) | Recomendo |
-| Fechamento semanal por e-mail toda segunda (André e Renata) | Decidido |
+| Fechamento semanal numa página do painel, pronta toda segunda | Decidido |
 | Uso no horário combinado: primeira/última atividade, tempo ativo, inativo e fora do PC (não substitui ponto oficial) | Núcleo |
 | Blocos de foco e trocas de contexto por hora | Útil |
 | Saúde das máquinas (disco, atualizações, antivírus) | Útil |
@@ -100,16 +102,23 @@ Exemplo ilustrativo de relatório do dia (dados inventados):
 - PostgreSQL, Caddy com HTTPS automático, tudo em Docker Compose no VPS.
 - Painel com login individual (André, Renata); chave por máquina; log de acesso; retenção de 90 dias (atividade); backup diário.
 - Nenhuma imagem da tela. Sem áudio, sem webcam, sem registro de teclas. Só programa, domínio e horários.
-- E-mail enviado por uma caixa da própria Hostinger (ex.: monitor@portoconseg.com.br). A senha fica só no VPS, nunca no código.
+- Login só com usuário e senha (decisão de André: sem imagens, não precisa de segunda etapa).
 - Funcionário sem tela própria. Se pedir os próprios dados, o gestor exporta o relatório dele (direito de acesso, art. 18 da LGPD).
 - Agente instalado em `Program Files` (gravação só por administrador) com exceção no Defender.
 
+## Sistemas de trabalho (lista inicial)
+
+| Tipo | Sistemas |
+|---|---|
+| Programas instalados | SegFlexNET, Aggilizador (Agger), pacote Office (Outlook, Word, Excel, PowerPoint, Teams) |
+| Sites | Ploomes, Clicksign, Digisac, Corretor Online, Área Exclusiva, portais de seguradoras, Google Agenda, Google Keep, Hostinger, Gemini |
+| Uso pessoal (inicial) | Bancos, redes sociais, streaming de vídeo e música, compras, jogos — ajustável no painel |
+
+Sites novos aparecem como "não classificado"; André ou Renata marcam como trabalho ou pessoal no painel.
+
 ## Decisões pendentes
 
-- Título da janela nos sistemas de trabalho escolhidos (opcional; mostra a tela do sistema, ex. "Cotação Automóvel", mas pode trazer nome de cliente)
-- Login em duas etapas no painel (recomendado; risco menor sem prints)
-- Lista inicial de uso pessoal (Claude propõe, André ajusta)
-- Caixa de e-mail para enviar os relatórios (ex.: monitor@portoconseg.com.br)
+- Airbnb e Stay Life (vistos nas abas do navegador): trabalho ou uso pessoal?
 - Lista de sites e sistemas por frente de trabalho (André vai enviar)
 
 ## Fontes
