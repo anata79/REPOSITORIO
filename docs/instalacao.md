@@ -33,12 +33,16 @@ Fonte: [Hostinger — como gerenciar registros A](https://www.hostinger.com/supp
 2. Cole os dois comandos abaixo, um de cada vez, e tecle Enter:
 
 ```bash
-curl -fsSLo instalar.sh https://raw.githubusercontent.com/anata79/REPOSITORIO/main/deploy/instalar-servidor.sh
+: ; curl -fsSLo instalar.sh https://raw.githubusercontent.com/anata79/REPOSITORIO/main/deploy/instalar-servidor.sh ; echo fim
 ```
 
 ```bash
-bash instalar.sh monitor.portoconseg.com.br
+: ; bash instalar.sh monitor.portoconseg.com.br ; echo fim
 ```
+
+   O terminal da Hostinger acrescenta caracteres invisíveis no começo e no fim do que é colado. O `: ;` no início e o `; echo fim` no final absorvem esses caracteres: aparece um "command not found" no começo, e isso é esperado.
+
+   Digite a senha root só quando o terminal pedir "Password:". Se ele já abrir em `root@...:~#`, você já está dentro.
 
 3. O instalador:
    - confere se o endereço já aponta para o VPS (se ainda não apontar, avisa e pergunta se continua);
