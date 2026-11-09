@@ -30,6 +30,17 @@ if [ -n "$MY_IP" ] && [ "$MY_IP" != "$DNS_IP" ]; then
   [ "${ok,,}" = "s" ] || exit 1
 fi
 
+echo "==> Conferindo se as portas 80 e 443 estão livres"
+# O painel usa as portas 80 e 443 (HTTPS). Se outro programa estiver nelas (ex.: n8n com Traefik),
+# a instalação para aqui, sem alterar nada. Ignora o próprio Monitor numa reinstalação.
+busy="$(ss -ltnp 2>/dev/null | grep -E ':(80|443) ' || true)"
+if [ -n "$busy" ] && ! docker ps --format '{{.Names}}' 2>/dev/null | grep -q 'deploy-caddy'; then
+  echo "As portas 80/443 já estão em uso por outro programa:"
+  echo "$busy"
+  echo "Desligue esse programa antes (ou peça ajuda) e rode o instalador de novo. Nada foi alterado."
+  exit 1
+fi
+
 echo "==> Instalando Git e Docker (se faltar)"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
